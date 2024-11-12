@@ -285,40 +285,57 @@ const Perfil = () => {
   const [showProject, setShowProject] = useState(
     Array(timelineData.length).fill(false)
   );
-  const [isHovering, setIsHovering] = useState(false);
   const scrollIntervalRef = useRef(null);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     setShow(true);
     setShowTimeline(true);
     setShowScrollbar(true);
 
-    return () => {
+    const startAutoScroll = () => {
+      if (!timelineRef.current || isHovering) return; // Don't scroll if hovering
+
+      scrollIntervalRef.current = setInterval(() => {
+        const container = timelineRef.current;
+        container.scrollLeft += SCROLL_SPEED;
+        const maxScroll = container.scrollWidth - container.clientWidth;
+        if (container.scrollLeft >= maxScroll) {
+          container.scrollLeft = 0; // Reset scroll to the beginning
+        }
+      }, 16); // Aim for ~60fps
+    };
+
+    const stopAutoScroll = () => {
       if (scrollIntervalRef.current) {
         clearInterval(scrollIntervalRef.current);
       }
     };
-  }, []);
+
+    startAutoScroll(); // Start scrolling immediately
+
+    // Add event listeners for mouseenter and mouseleave on the timeline container
+    const timelineContainer = timelineRef.current;
+    if (timelineContainer) {
+      timelineContainer.addEventListener('mouseenter', stopAutoScroll);
+      timelineContainer.addEventListener('mouseleave', startAutoScroll);
+    }
+
+    return () => {
+      stopAutoScroll();
+      if (timelineContainer) {
+        timelineContainer.removeEventListener('mouseenter', stopAutoScroll);
+        timelineContainer.removeEventListener('mouseleave', startAutoScroll);
+      }
+    };
+  }, [isHovering]); // Add isHovering to dependency array
 
   const handleMouseEnter = () => {
     setIsHovering(true);
-    const container = timelineRef.current;
-    if (!container) return;
-
-    scrollIntervalRef.current = setInterval(() => {
-      container.scrollLeft += SCROLL_SPEED;
-      const maxScroll = container.scrollWidth - container.clientWidth;
-      if (container.scrollLeft >= maxScroll) {
-        container.scrollLeft = 0;
-      }
-    }, 16);
   };
 
   const handleMouseLeave = () => {
     setIsHovering(false);
-    if (scrollIntervalRef.current) {
-      clearInterval(scrollIntervalRef.current);
-    }
   };
 
   const toggleProjectVisibility = (index) => {
