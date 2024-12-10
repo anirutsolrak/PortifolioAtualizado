@@ -1,63 +1,33 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Typography,
-  Button,
-  styled,
-  createTheme,
-  ThemeProvider,
-} from '@mui/material';
+import { Box, Typography, Button, styled, createTheme, ThemeProvider, Menu, MenuItem } from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { colors } from '../../theme/colors';
+import { colors, shadows } from '../../theme/colors';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-});
+const theme = createTheme();
 
-const ProjectBar = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'isExpanded',
-})(({ theme, isExpanded }) => ({
+const ProjectBar = styled(Box)(({ expanded }) => ({
   position: 'fixed',
   bottom: 0,
-  right: isExpanded ? '0px' : '50px',
+  right: 0,
   backgroundColor: 'rgba(21, 53, 71, 0.8)',
-  color: 'black',
-  width: isExpanded ? '170px' : '30px',
-  height: '100vh',
+  color: colors.white,
+  width: expanded ? '200px' : '50px',
+  height: 'calc(100vh - 80px)',
   display: 'flex',
   flexDirection: 'column',
-  justifyContent: 'center',
-  zIndex: 10,
+  justifyContent: 'flex-start',
   alignItems: 'center',
   transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out',
+  zIndex: 40,
   cursor: 'pointer',
-  transform: isExpanded ? 'translateX(0)' : 'translateX(50px)',
-  [theme.breakpoints.down('md')]: {
-    display: 'flex',
-  },
-  [theme.breakpoints.up('lg')]: {
-    display: 'none',
-  },
+  transform: expanded ? 'translateX(0)' : 'translateX(50px)',
   '& .label': {
-    writingMode: isExpanded ? 'horizontal-tb' : 'vertical-rl',
-    transform: isExpanded
-      ? 'rotate(0deg)'
-      : 'rotate(180deg) translateX(0%) translateY(0%)',
-    transition: 'transform 0.3s ease-in-out, writing-mode 0.3s ease-in-out',
+    writingMode: expanded ? 'horizontal-tb' : 'vertical-rl',
+    transform: expanded ? 'rotate(0deg)' : 'rotate(90deg)',
+    transition: 'transform 0.3s ease-in-out',
     display: 'block',
-    fontSize: isExpanded ? '1rem' : '1.2rem',
-    whiteSpace: 'nowrap',
-    textAlign: 'center',
-    margin: '0.5rem',
-    color: isExpanded ? colors.white : 'black',
+    fontSize: expanded ? '1rem' : '1.2rem',
   },
 }));
 
@@ -65,6 +35,7 @@ const BotaoProjetos = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null); // Para o menu do botão flutuante
 
   const menuItems = [
     { label: 'Websites', path: '/perfil/projetos/websites' },
@@ -72,9 +43,7 @@ const BotaoProjetos = () => {
     { label: 'Projetos com IA', path: '/perfil/projetos/projetos-com-ia' },
   ];
 
-  const showButton =
-    location.pathname.startsWith('/perfil') &&
-    !location.pathname.includes('/projetos');
+  const showButton = location.pathname.startsWith('/perfil') && !location.pathname.includes('/projetos');
 
   const handleExpand = () => {
     setExpanded(!expanded);
@@ -83,49 +52,81 @@ const BotaoProjetos = () => {
   const handleMenuItemClick = (path) => {
     navigate(path);
     setExpanded(false);
+    handleClose(); // Fecha o menu do botão flutuante
+  };
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
   };
 
   return (
     <ThemeProvider theme={theme}>
       {showButton && (
-        <ProjectBar isExpanded={expanded} onClick={handleExpand}>
-          <Typography
-            className="label"
-            variant="h6"
-            sx={{ fontWeight: 'bold' }}
-          >
-            Projetos
-          </Typography>
-          {expanded && (
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <>
+          <ProjectBar expanded={expanded} onClick={handleExpand} sx={{ display: { xs: 'flex', lg: 'none' } }}>
+            <Typography className="label" variant="h6" sx={{ fontWeight: 'bold', margin: '0.5rem' }}>
+              Projetos
+            </Typography>
+            {expanded && (
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                {menuItems.map((item) => (
+                  <Button key={item.path} onClick={() => handleMenuItemClick(item.path)} fullWidth sx={{ backgroundColor: colors.secondary, color: 'black', fontWeight: '700', fontSize: '1rem', textTransform: 'none', padding: '0.8rem', margin: '0.2rem', '&:hover': { backgroundColor: colors.primary, color: colors.white } }}>
+                    {item.label}
+                  </Button>
+                ))}
+              </Box>
+            )}
+          </ProjectBar>
+
+          <Box sx={{ display: { xs: 'none', lg: 'block' }, position: 'fixed', bottom: 16, right: 16, zIndex: 50 }}>
+            <Button
+              variant="contained"
+              aria-haspopup="true"
+              aria-controls="project-menu"
+              aria-label="Ver Projetos"
+              onClick={handleClick}
+              startIcon={<KeyboardArrowUpIcon />}
+              sx={{ backgroundColor: colors.secondary, color: 'black', fontWeight: '700', fontSize: '1rem', borderRadius: '30px', border: `4px solid ${colors.white}`, px: 2, py: 1.5, '&:hover': { backgroundColor: colors.primary, borderColor: colors.secondary, color: colors.white } }}
+            >
+              Ver Projetos
+            </Button>
+            <Menu
+              id="project-menu"
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+              anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+              transformOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+              sx={{
+                '& .MuiPaper-root': {
+                  backgroundColor: colors.white,
+                  color: colors.text,
+                  borderRadius: '15px',
+                  boxShadow: shadows.card,
+                },
+                '& .MuiMenuItem-root': {
+                  '&:hover': {
+                    backgroundColor: colors.hover,
+                  },
+                },
+              }}
+            >
               {menuItems.map((item) => (
-                <Button
-                  key={item.path}
-                  onClick={() => handleMenuItemClick(item.path)}
-                  fullWidth
-                  sx={{
-                    backgroundColor: colors.secondary,
-                    color: 'black',
-                    fontWeight: '700',
-                    fontSize: '1rem',
-                    textTransform: 'none',
-                    padding: '0.8rem',
-                    margin: '0.2rem',
-                    '&:hover': {
-                      backgroundColor: colors.primary,
-                      color: colors.white,
-                    },
-                  }}
-                >
+                <MenuItem key={item.path} onClick={() => handleMenuItemClick(item.path)}>
                   {item.label}
-                </Button>
+                </MenuItem>
               ))}
-            </Box>
-          )}
-        </ProjectBar>
+            </Menu>
+          </Box>
+        </>
       )}
     </ThemeProvider>
   );
 };
+
 
 export default BotaoProjetos;

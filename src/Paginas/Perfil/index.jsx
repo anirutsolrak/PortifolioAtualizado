@@ -15,6 +15,7 @@ import ProcessoDeDesenvolvimento from '../../componentes/ProcessoDeDesenvolvimen
 import DesignProcessBanner from '../../componentes/ProcessoDeDesenvolvimento/DesignProcessBanner';
 import BotaoProjetos from '../../componentes/BotaoProjetos';
 import AnimatedText from '../../componentes/AnimatedText';
+import FormularioContato from '../../componentes/Formulario';
 
 // Criando o tema (pode ser movido para um arquivo separado)
 const theme = createTheme({
@@ -28,6 +29,14 @@ const theme = createTheme({
     },
   },
 });
+
+const handleFormSuccess = () => {
+  console.log('Formulário enviado com sucesso!');
+};
+
+const handleFormError = (error) => {
+  console.error('Erro ao enviar formulário:', error);
+};
 
 const Perfil = () => {
   const navigate = useNavigate();
@@ -192,38 +201,14 @@ const Perfil = () => {
               fontWeight: 600,
             }}
           >
-            Sobre Mim
+            Solicite seu Orçamento
           </Typography>
           <Grid2 container spacing={4} justifyContent="center">
             <Grid2 size={{ xs: 12, md: 8 }}>
-              <Typography
-                variant="body1"
-                paragraph
-                sx={{
-                  color: colors.text,
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                Desde 2023, tenho me dedicado ao desenvolvimento web,
-                construindo uma carreira sólida e focada em entregar soluções
-                inovadoras. Comecei minha jornada com JavaScript puro e CSS, e
-                ao longo do tempo, aprimorei minhas habilidades em JavaScript,
-                React e Ferramentas de IAs.
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{
-                  color: colors.text,
-                  fontSize: '1.1rem',
-                  lineHeight: 1.8,
-                }}
-              >
-                Sou apaixonado por Inteligência Artificial e suas aplicações no
-                desenvolvimento web. Acredito que a IA tem um potencial enorme
-                para revolucionar a forma como criamos e interagimos com as
-                soluções digitais.
-              </Typography>
+            <FormularioContato
+          onSuccess={handleFormSuccess}
+          onError={handleFormError}
+        />
             </Grid2>
           </Grid2>
         </Container>

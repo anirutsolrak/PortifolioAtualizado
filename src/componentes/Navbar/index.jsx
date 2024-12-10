@@ -33,7 +33,6 @@ const Navbar = () => {
   const links = [
     { label: 'HOME', path: '/perfil' },
     { label: 'ARTIGOS', path: '/perfil/articles' },
-    { label: 'PROJETOS', path: '/perfil/projects' },
     { label: 'SOBRE', path: '/perfil/about' },
   ];
 
