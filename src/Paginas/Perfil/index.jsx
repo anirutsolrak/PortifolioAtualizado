@@ -1,3 +1,4 @@
+// Perfil.js
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -13,11 +14,11 @@ import {
 import { colors, shadows } from '../../theme/colors';
 import ProcessoDeDesenvolvimento from '../../componentes/ProcessoDeDesenvolvimento';
 import DesignProcessBanner from '../../componentes/ProcessoDeDesenvolvimento/DesignProcessBanner';
-import BotaoProjetos from '../../componentes/BotaoProjetos';
 import AnimatedText from '../../componentes/AnimatedText';
 import FormularioContato from '../../componentes/Formulario';
+import Navbar from '../../componentes/Navbar'; // Importe o Navbar aqui
 
-// Criando o tema (pode ser movido para um arquivo separado)
+
 const theme = createTheme({
   breakpoints: {
     values: {
@@ -71,8 +72,8 @@ const Perfil = () => {
 
   return (
     <Box sx={{ bgcolor: 'background.default', minWidth: '98vw' }}>
+       <Navbar />
       <DesignProcessBanner />
-      <BotaoProjetos />
 
       <Box id="services" sx={{ py: 8, backgroundColor: colors.white }}>
         <Container maxWidth="md" sx={{ mb: 4 }}>
@@ -191,26 +192,24 @@ const Perfil = () => {
       </Box>
 
       <Box sx={{ py: 8, backgroundColor: colors.white }}>
-        <Container>
+        <Container maxWidth="md">
           <Typography
             variant="h3"
             align="center"
             sx={{
-              mb: 6,
+              mb: 4,
               color: colors.primary,
               fontWeight: 600,
             }}
           >
             Solicite seu Orçamento
           </Typography>
-          <Grid2 container spacing={4} justifyContent="center">
-            <Grid2 size={{ xs: 12, md: 8 }}>
+          <Box sx={{ display: 'flex', justifyContent: 'center' }}>
             <FormularioContato
-          onSuccess={handleFormSuccess}
-          onError={handleFormError}
-        />
-            </Grid2>
-          </Grid2>
+              onSuccess={handleFormSuccess}
+              onError={handleFormError}
+            />
+          </Box>
         </Container>
       </Box>
     </Box>

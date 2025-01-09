@@ -10,6 +10,7 @@ import {
   Button,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { colors, shadows } from '../../theme/colors';
 import logobanner from '../../assets/logobanner.png';
@@ -18,16 +19,28 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [showMenu, setShowMenu] = useState(false);
+  const [anchorElProjects, setAnchorElProjects] = useState(null);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-    setShowMenu(true);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
-    setShowMenu(false);
+  };
+
+  const handleOpenProjectsMenu = (event) => {
+    setAnchorElProjects(event.currentTarget);
+  };
+
+  const handleCloseProjectsMenu = () => {
+    setAnchorElProjects(null);
+  };
+
+  const handleMenuItemClick = (path) => {
+    navigate(path);
+    handleCloseProjectsMenu();
+    handleCloseNavMenu();
   };
 
   const links = [
@@ -36,18 +49,29 @@ const Navbar = () => {
     { label: 'SOBRE', path: '/perfil/about' },
   ];
 
+  const projectItems = [
+    { label: 'Websites', path: '/perfil/projetos/websites' },
+    { label: 'Aplicações', path: '/perfil/projetos/aplicacoes' },
+    { label: 'Projetos com IA', path: '/perfil/projetos/projetos-com-ia' },
+  ];
+
   return (
     <Box>
-      <AppBar position="static">
+      <AppBar
+        position="fixed"
+        sx={{
+          backgroundColor: colors.background,
+          boxShadow: shadows.card,
+          zIndex: (theme) => theme.zIndex.drawer + 1,
+        }}
+      >
         <Toolbar
           sx={{
             alignItems: 'center',
             padding: '1rem 2rem',
             minHeight: '80px',
-            backgroundColor: colors.background,
             justifyContent: { xs: 'space-between', md: 'space-between' },
-            minWidth: '98vw',
-            zIndex: 20,
+            width: '100%',
           }}
         >
           <img
@@ -61,14 +85,16 @@ const Navbar = () => {
               sx={{
                 color: colors.primary,
                 fontWeight: 700,
-                fontSize: '1.8rem',
+                fontSize: { xs: '1.2rem', sm: '1.5rem', md: '1.8rem' },
                 letterSpacing: '0.5px',
+                display: { xs: 'none', sm: 'block' },
               }}
             >
               DESENVOLVEDOR FRONT-END
             </Typography>
           </Box>
 
+          {/* Menu Mobile */}
           <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               onClick={handleOpenNavMenu}
@@ -86,7 +112,7 @@ const Navbar = () => {
               anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
               keepMounted
               transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-              open={showMenu}
+              open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
                 '& .MuiPaper-root': {
@@ -94,11 +120,11 @@ const Navbar = () => {
                   color: colors.text,
                   borderRadius: '15px',
                   boxShadow: shadows.card,
-                  maxWidth: '200px',
                 },
                 '& .MuiMenuItem-root': {
                   '&:hover': {
                     backgroundColor: colors.hover,
+                    color: colors.accent,
                   },
                 },
               }}
@@ -110,39 +136,121 @@ const Navbar = () => {
                     navigate(link.path);
                     handleCloseNavMenu();
                   }}
+                  sx={{
+                    color: location.pathname === link.path ? colors.accent : colors.text,
+                    '&:hover': {
+                      color: colors.accent,
+                    }
+                  }}
                 >
                   {link.label}
                 </MenuItem>
               ))}
+              <MenuItem
+                onClick={handleOpenProjectsMenu}
+                sx={{
+                  color: colors.text,
+                  '&:hover': {
+                    color: colors.accent,
+                  }
+                }}
+              >
+                Projetos
+                <KeyboardArrowDownIcon />
+              </MenuItem>
             </Menu>
           </Box>
 
+          {/* Menu Desktop */}
           <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 3 }}>
             {links.map((link) => (
               <Button
                 key={link.path}
                 onClick={() => navigate(link.path)}
                 sx={{
-                  color:
-                    location.pathname === link.path
-                      ? colors.secondary
-                      : colors.primary,
+                  color: location.pathname === link.path ? colors.accent : colors.primary,
                   fontWeight: 500,
                   fontSize: '1rem',
                   letterSpacing: '1px',
                   padding: '0.5rem 1rem',
                   '&:hover': {
                     backgroundColor: colors.hover,
+                    color: colors.accent,
                   },
                 }}
               >
                 {link.label}
               </Button>
             ))}
+
+            {/* Botão de Projetos */}
+            <Button
+              variant="text"
+              aria-haspopup="true"
+              aria-controls="project-menu"
+              onClick={handleOpenProjectsMenu}
+              endIcon={<KeyboardArrowDownIcon />}
+              sx={{
+                color: colors.primary,
+                fontWeight: 500,
+                fontSize: '1rem',
+                letterSpacing: '1px',
+                padding: '0.5rem 1rem',
+                '&:hover': {
+                  backgroundColor: colors.hover,
+                  color: colors.accent,
+                },
+              }}
+            >
+              Projetos
+            </Button>
           </Box>
         </Toolbar>
       </AppBar>
-      <Outlet />
+
+      {/* Menu de Projetos (compartilhado para mobile e desktop) */}
+      <Menu
+        id="project-menu"
+        anchorEl={anchorElProjects}
+        open={Boolean(anchorElProjects)}
+        onClose={handleCloseProjectsMenu}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+        sx={{
+          '& .MuiPaper-root': {
+            backgroundColor: colors.white,
+            color: colors.text,
+            borderRadius: '15px',
+            boxShadow: shadows.card,
+          },
+          '& .MuiMenuItem-root': {
+            '&:hover': {
+              backgroundColor: colors.hover,
+              color: colors.accent,
+            },
+          },
+        }}
+      >
+        {projectItems.map((item) => (
+          <MenuItem
+            key={item.path}
+            onClick={() => handleMenuItemClick(item.path)}
+            sx={{
+              color: colors.text,
+              '&:hover': {
+                color: colors.accent,
+              }
+            }}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
+      </Menu>
+
+      <Toolbar />
+      <Box sx={{ pt: { xs: 2, sm: 3 } }}>
+        <Outlet />
+      </Box>
     </Box>
   );
 };

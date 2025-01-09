@@ -52,19 +52,18 @@ const DesignProcess = () => {
     <Box
       ref={sectionRef}
       sx={{
-        minHeight: '100vh',
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
         backgroundColor: colors.background,
-        padding: '4rem 2rem',
         gap: '2rem',
         overflow: 'hidden',
         opacity: sectionInView ? 1 : 0,
         transition: 'opacity 0.6s ease-out',
       }}
+      
     >
       <Typography
         variant="h3"
@@ -89,22 +88,21 @@ const DesignProcess = () => {
           justifyContent: 'space-around',
           alignItems: 'center',
           width: '100%',
-          maxWidth: '1400px',
-          margin: '0 auto',
-          padding: '0 2rem',
+          maxWidth: '1400px',          
         }}
       >
         <Grid2 size={{ xs: 12, md: 6 }}>
           <Grid2 sx={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             {steps.map((step, index) => (
-              <Box key={index} sx={{ position: 'relative', width: '50%' }}>
+              <Box key={index} sx={{ position: 'relative' }}>
                 <Box
                   sx={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '1rem',
                     cursor: 'pointer',
-                    color: activeStep === index ? colors.primary : colors.text, // Cor primária se ativo, senão cor de texto
+                    color:
+                      activeStep === index ? colors.secondary : colors.primary, // Cor primária se ativo, senão cor de texto
                     fontWeight: activeStep === index ? 'bold' : 'normal',
                     '&:hover': {
                       transform: 'scale(1.05)',
@@ -115,12 +113,25 @@ const DesignProcess = () => {
                       height: '20px',
                       borderRadius: '50%',
                       backgroundColor:
-                        activeStep === index ? colors.primary : colors.text, // Cor primária se ativo, senão cor de texto
+                        activeStep === index
+                          ? colors.secondary
+                          : colors.primary, // Cor primária se ativo, senão cor de texto
                     },
                   }}
                   onClick={() => handleStepClick(index)}
                 >
-                  <Typography variant="h6">{step.name}</Typography>
+              <Typography
+  variant="h5" // Tamanho padrão para mobile
+  sx={{
+    fontSize: {
+      md: '2rem', 
+      xs: '1.25rem',
+    },
+    fontWeight: 'bold',
+  }}
+>
+  {step.name}
+</Typography>
                 </Box>
 
                 {activeStep === index && (
@@ -147,12 +158,13 @@ const DesignProcess = () => {
             ))}
           </Grid2>
         </Grid2>
-        <Grid2 size={{ xs: 12, md: 6 }}>
+
+        {/*<Grid2 size={{ xs: 12, md: 6 }}>
           <ProcessCircle
             steps={steps}
             style={{ opacity: sectionInView ? 1 : 0 }}
           />
-        </Grid2>
+        </Grid2> */}
       </Grid2>
     </Box>
   );

@@ -9,6 +9,7 @@ import {
   Button,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { colors, shadows } from '../../theme/colors';
 
 const CartaoProjeto = ({ project }) => {
   const navigate = useNavigate();
@@ -35,8 +36,11 @@ const CartaoProjeto = ({ project }) => {
         borderRadius: '20px',
         overflow: 'hidden',
         transition: 'transform 0.3s ease-in-out',
+        boxShadow: shadows.card,
+        backgroundColor: colors.white,
         '&:hover': {
           transform: 'translateY(-10px)',
+          boxShadow: shadows.button,
         },
       }}
       onClick={handleClick}
@@ -59,10 +63,10 @@ const CartaoProjeto = ({ project }) => {
         />
       </CardMedia>
       <CardContent sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 2 }}>
-        <Typography variant="h6" component="h3">
+        <Typography variant="h6" component="h3" sx={{ color: colors.primary }}>
           {project.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" sx={{ color: colors.text }}>
           {project.shortDescription}
         </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, my: 2 }}>
@@ -72,8 +76,11 @@ const CartaoProjeto = ({ project }) => {
               label={tech}
               size="small"
               sx={{
-                backgroundColor: '#646CFF',
-                color: 'white',
+                backgroundColor: colors.secondary,
+                color: colors.white,
+                '&:hover': {
+                  backgroundColor: colors.accent,
+                },
               }}
             />
           ))}
@@ -83,9 +90,10 @@ const CartaoProjeto = ({ project }) => {
             variant="contained"
             onClick={() => navigate(`/perfil/project/${project.id}`)}
             sx={{
-              backgroundColor: '#646CFF',
+              backgroundColor: colors.secondary,
+              color: colors.white,
               '&:hover': {
-                backgroundColor: '#4B50FF',
+                backgroundColor: colors.accent,
               },
             }}
           >
@@ -96,11 +104,12 @@ const CartaoProjeto = ({ project }) => {
             href={project.liveUrl}
             target="_blank"
             sx={{
-              borderColor: '#646CFF',
-              color: '#646CFF',
+              borderColor: colors.secondary,
+              color: colors.secondary,
               '&:hover': {
-                borderColor: '#4B50FF',
-                backgroundColor: 'rgba(100, 108, 255, 0.08)',
+                borderColor: colors.accent,
+                color: colors.accent,
+                backgroundColor: colors.hover,
               },
             }}
           >

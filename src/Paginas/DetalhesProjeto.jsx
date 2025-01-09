@@ -52,7 +52,7 @@ const DetalhesProjeto = () => {
           >
             Voltar
           </Button>
-          <BotaoProjetos menuItems={menuItems}/>
+          {/*<BotaoProjetos menuItems={menuItems}/>*/}
         </Box>
         
         <Grid container spacing={4}>

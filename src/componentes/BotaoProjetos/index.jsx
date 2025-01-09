@@ -10,7 +10,7 @@ const ProjectBar = styled(Box)(({ expanded }) => ({
   position: 'fixed',
   bottom: 0,
   right: 0,
-  backgroundColor: 'rgba(21, 53, 71, 0.8)',
+  backgroundColor: colors.primary,
   color: colors.white,
   width: expanded ? '200px' : '50px',
   height: 'calc(100vh - 80px)',
@@ -35,7 +35,7 @@ const BotaoProjetos = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [expanded, setExpanded] = useState(false);
-  const [anchorEl, setAnchorEl] = useState(null); // Para o menu do botão flutuante
+  const [anchorEl, setAnchorEl] = useState(null);
 
   const menuItems = [
     { label: 'Websites', path: '/perfil/projetos/websites' },
@@ -52,7 +52,7 @@ const BotaoProjetos = () => {
   const handleMenuItemClick = (path) => {
     navigate(path);
     setExpanded(false);
-    handleClose(); // Fecha o menu do botão flutuante
+    handleClose();
   };
 
   const handleClick = (event) => {
@@ -68,13 +68,29 @@ const BotaoProjetos = () => {
       {showButton && (
         <>
           <ProjectBar expanded={expanded} onClick={handleExpand} sx={{ display: { xs: 'flex', lg: 'none' } }}>
-            <Typography className="label" variant="h6" sx={{ fontWeight: 'bold', margin: '0.5rem' }}>
+            <Typography className="label" variant="h6" sx={{ fontWeight: 'bold', margin: '0.5rem', color: colors.white }}>
               Projetos
             </Typography>
             {expanded && (
               <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
                 {menuItems.map((item) => (
-                  <Button key={item.path} onClick={() => handleMenuItemClick(item.path)} fullWidth sx={{ backgroundColor: colors.secondary, color: 'black', fontWeight: '700', fontSize: '1rem', textTransform: 'none', padding: '0.8rem', margin: '0.2rem', '&:hover': { backgroundColor: colors.primary, color: colors.white } }}>
+                  <Button 
+                    key={item.path} 
+                    onClick={() => handleMenuItemClick(item.path)} 
+                    fullWidth 
+                    sx={{ 
+                      backgroundColor: colors.secondary,
+                      color: colors.white,
+                      fontWeight: '700',
+                      fontSize: '1rem',
+                      textTransform: 'none',
+                      padding: '0.8rem',
+                      margin: '0.2rem',
+                      '&:hover': {
+                        backgroundColor: colors.accent,
+                      }
+                    }}
+                  >
                     {item.label}
                   </Button>
                 ))}
@@ -90,7 +106,19 @@ const BotaoProjetos = () => {
               aria-label="Ver Projetos"
               onClick={handleClick}
               startIcon={<KeyboardArrowUpIcon />}
-              sx={{ backgroundColor: colors.secondary, color: 'black', fontWeight: '700', fontSize: '1rem', borderRadius: '30px', border: `4px solid ${colors.white}`, px: 2, py: 1.5, '&:hover': { backgroundColor: colors.primary, borderColor: colors.secondary, color: colors.white } }}
+              sx={{
+                backgroundColor: colors.secondary,
+                color: colors.white,
+                fontWeight: '700',
+                fontSize: '1rem',
+                borderRadius: '30px',
+                border: `4px solid ${colors.white}`,
+                px: 2,
+                py: 1.5,
+                '&:hover': {
+                  backgroundColor: colors.accent,
+                }
+              }}
             >
               Ver Projetos
             </Button>
@@ -111,12 +139,22 @@ const BotaoProjetos = () => {
                 '& .MuiMenuItem-root': {
                   '&:hover': {
                     backgroundColor: colors.hover,
+                    color: colors.accent,
                   },
                 },
               }}
             >
               {menuItems.map((item) => (
-                <MenuItem key={item.path} onClick={() => handleMenuItemClick(item.path)}>
+                <MenuItem 
+                  key={item.path} 
+                  onClick={() => handleMenuItemClick(item.path)}
+                  sx={{
+                    color: colors.text,
+                    '&:hover': {
+                      color: colors.accent,
+                    }
+                  }}
+                >
                   {item.label}
                 </MenuItem>
               ))}
@@ -127,6 +165,5 @@ const BotaoProjetos = () => {
     </ThemeProvider>
   );
 };
-
 
 export default BotaoProjetos;
