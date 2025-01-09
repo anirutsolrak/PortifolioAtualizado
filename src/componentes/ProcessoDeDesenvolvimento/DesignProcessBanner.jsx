@@ -73,7 +73,7 @@ const DesignProcessBanner = () => {
                   },
                 }}
                 onClick={() => {
-                  const element = document.getElementById('services');
+                  const element = document.getElementById('contato');
                   element?.scrollIntoView({ behavior: 'smooth' });
                 }}
               >
@@ -85,6 +85,7 @@ const DesignProcessBanner = () => {
           <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
             <Box
               sx={{
+                display: { xs: 'none', md: 'block' }, // Oculta a imagem em mobile
                 position: 'relative',
                 '&::before': {
                   content: '""',
