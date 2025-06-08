@@ -21,13 +21,13 @@ const DesignProcessBanner = () => {
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: 8 }}>
         <Grid2 container spacing={6} alignItems="center">
           <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
-            <Box
-              sx={{
-                textAlign: { xs: 'center', md: 'left' },
-                maxWidth: '600px',
-                mx: 'auto',
-              }}
-            >
+           <Box
+  sx={{
+    textAlign: 'center',
+    maxWidth: '600px',
+    mx: 'auto',
+  }}
+>
               <Typography
                 variant="h3"
                 sx={{
