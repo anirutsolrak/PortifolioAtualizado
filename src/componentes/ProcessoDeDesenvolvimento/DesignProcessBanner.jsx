@@ -18,12 +18,14 @@ const HeroContainer = styled(Box)({
 const DesignProcessBanner = () => {
   return (
     <HeroContainer>
-      <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: 8 }}>
+      <Container maxWidth="xl" sx={{ position: 'relative', zIndex: 2, py: 8, width: '100%' }}>
         <Box
           sx={{
             textAlign: 'center',
-            maxWidth: '800px',
+            width: '100%',
+            maxWidth: '1200px',
             mx: 'auto',
+            px: { xs: 2, sm: 4, md: 6 },
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -31,28 +33,30 @@ const DesignProcessBanner = () => {
           }}
         >
           <Typography
-            variant="h3"
+            variant="h1"
             sx={{
               mb: 3,
               lineHeight: 1.2,
-              fontSize: { xs: '2.5rem', md: '3.5rem' },
+              fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5rem' },
               fontWeight: 700,
+              width: '100%',
             }}
           >
             Desenvolvimento Web que Pensa
           </Typography>
           <Typography
-            variant="h5"
+            variant="h2"
             sx={{
               mb: 4,
               lineHeight: 1.6,
-              fontSize: { xs: '1.5rem', md: '2rem' },
+              fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem', lg: '3rem' },
               fontWeight: 600,
+              width: '100%',
             }}
           >
             Resultados que Crescem
           </Typography>
-          <Box sx={{ mb: 4, maxWidth: '600px' }}>
+          <Box sx={{ mb: 4, width: '100%', maxWidth: '900px' }}>
             <AnimatedText text="Especialista em React e IA. criando soluções que automatizam processos, engajam usuários e impulsionam seu negócio." />
           </Box>
           <Button
@@ -65,9 +69,9 @@ const DesignProcessBanner = () => {
               borderRadius: '30px',
               zIndex: 30,
               border: `4px solid ${colors.white}`,
-              px: 4,
-              py: 1.5,
-              fontSize: '1.1rem',
+              px: { xs: 3, sm: 4, md: 6 },
+              py: { xs: 1.5, sm: 2 },
+              fontSize: { xs: '1rem', sm: '1.1rem', md: '1.2rem' },
               transition: 'all 0.3s ease',
               '&:hover': {
                 backgroundColor: colors.accent,
