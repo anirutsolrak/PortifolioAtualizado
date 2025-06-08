@@ -20,7 +20,7 @@ const DesignProcessBanner = () => {
     <HeroContainer>
       <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 2, py: 8 }}>
         <Grid2 container spacing={6} alignItems="center">
-          <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
+          <Grid2 size={{ xs: 12, md: 12 }} sx={{ order: { xs: 1, md: 2 } }}>
            <Box
   sx={{
     textAlign: 'center',
