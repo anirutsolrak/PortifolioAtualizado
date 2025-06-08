@@ -68,7 +68,7 @@ const DesignProcessBanner = () => {
           </Typography>
           
           <Box sx={{ width: '100%', maxWidth: '1000px' }}>
-            <AnimatedText text="Especialista em React e IA. criando soluções que automatizam processos, engajam usuários e impulsionam seu negócio." />
+            <AnimatedText text="E specialista em React e IA. criando soluções que automatizam processos, engajam usuários e impulsionam seu negócio." />
           </Box>
           
           <Button
