@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Container, Grid2, Typography, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { colors } from '../../theme/colors';
-import Photo from '../../assets/Photo.svg';
+import Photo from '../../assets/foto perfil.png';
 import AnimatedText from '../AnimatedText';
 
 const HeroContainer = styled(Box)({
