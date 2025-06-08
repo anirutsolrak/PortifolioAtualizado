@@ -13,7 +13,7 @@ const HeroContainer = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundImage: colors.gradient.primary,
-  width: '100%',
+  Minwidth: '100%',
 });
 
 const DesignProcessBanner = () => {
