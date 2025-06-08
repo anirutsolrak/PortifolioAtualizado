@@ -2,7 +2,6 @@ import React from 'react';
 import { Box, Container, Grid2, Typography, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { colors } from '../../theme/colors';
-import Photo from '../../assets/foto perfil.png';
 import AnimatedText from '../AnimatedText';
 
 const HeroContainer = styled(Box)({
@@ -36,8 +35,8 @@ const DesignProcessBanner = () => {
                   lineHeight: 1.2,
                 }}
               >
-Desenvolvimento Web que Pensa            </Typography>
-
+                Desenvolvimento Web que Pensa
+              </Typography>
               <Typography
                 variant="h5"
                 sx={{
@@ -45,13 +44,11 @@ Desenvolvimento Web que Pensa            </Typography>
                   lineHeight: 1.6,
                 }}
               >
-               Resultados que Crescem
+                Resultados que Crescem
               </Typography>
-
               <Box>
                 <AnimatedText text=" Especialista em React e IA. criando soluções que automatizam processos, engajam usuários e impulsionam seu negócio." />
               </Box>
-
               <Button
                 variant="contained"
                 size="large"
@@ -81,38 +78,6 @@ Desenvolvimento Web que Pensa            </Typography>
               >
                 Contato
               </Button>
-            </Box>
-          </Grid2>
-
-          <Grid2 size={{ xs: 12, md: 6 }} sx={{ order: { xs: 1, md: 2 } }}>
-            <Box
-              sx={{
-                display: { xs: 'none', md: 'block' }, // Oculta a imagem em mobile
-                position: 'relative',
-                '&::before': {
-                  content: '""',
-                  position: 'absolute',
-                  top: '-10%',
-                  right: '-10%',
-                  width: '120%',
-                  height: '120%',
-                  background: colors.gradient.secondary,
-                  borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%',
-                  zIndex: -1,
-                },
-              }}
-            >
-              <img
-                src={Photo}
-                alt="Developer"
-                style={{
-                  width: '80%',
-                  maxWidth: '500px',
-                  height: 'auto',
-                  display: 'block',
-                  margin: '0 auto',
-                }}
-              />
             </Box>
           </Grid2>
         </Grid2>
