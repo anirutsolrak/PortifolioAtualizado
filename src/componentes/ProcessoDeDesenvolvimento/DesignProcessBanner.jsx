@@ -13,7 +13,7 @@ const HeroContainer = styled(Box)({
   alignItems: 'center',
   justifyContent: 'center',
   backgroundImage: colors.gradient.primary,
-  Minwidth: '100%',
+  minWidth: '100%',
 });
 
 const DesignProcessBanner = () => {
@@ -25,7 +25,7 @@ const DesignProcessBanner = () => {
           position: 'relative', 
           zIndex: 2, 
           py: 8, 
-          width: '100%',
+          minWidth: '100%',
           maxWidth: '100%',
           px: { xs: 3, sm: 4, md: 6, lg: 8 }
         }}
